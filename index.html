@@ -294,7 +294,7 @@ footer{background:var(--n);color:var(--w);padding:2.5rem 2rem;text-align:center}
   </section>
   <section class="about" id="sobre-mi">
     <div class="ab-inner">
-      <img class="ab-img" id="susanaImg" src="imgCG/susana.jpg" alt="Susana Bisetti">
+      <img class="ab-img" id="susanaImg" src="https://icbrvtfgxnoztmpfczrx.supabase.co/storage/v1/object/public/joyas/abu/Prod2.jpg" alt="Susana Bisetti">
       <div class="ab-content">
         <h2>Susana Bisetti</h2>
         <div class="ab-sub">Orfebre Artesanal · Rosario, Argentina</div>
@@ -583,18 +583,13 @@ async function uploadFile(file, folder='products'){
 // ═══════════════════════════════════════════════════════════
 // CONSTANTS / STATE
 // ═══════════════════════════════════════════════════════════
-const ADMIN_EMAIL='admin@cioajoyas.com', ADMIN_PASS='ciao2024', WA='5493415408229';
-
-const DEF_PRODUCTS=[
-  {id:1,nombre:'Dije Aguamarina & Apatito',tipo:'dije',material:['alpaca'],piedra:['aguamarina','apatito'],descripcion:'Dije artesanal en Alpaca, Aguamarina y Apatito.',vendido:true,imagen:'imgCG/Dije en alpaca, aguamarina y apatito.jpg',imagenes:['imgCG/Dije en alpaca, aguamarina y apatito.jpg']},
-  {id:2,nombre:'Brazalete Cobre Bronce & Alpaca',tipo:'brazalete',material:['cobre','bronce','alpaca'],piedra:[],descripcion:'Brazalete artesanal en Cobre, Bronce y Alpaca.',vendido:false,imagen:'imgCG/Brazalete en cobre, bronce y alpaca.jpg',imagenes:['imgCG/Brazalete en cobre, bronce y alpaca.jpg']},
-  {id:3,nombre:'Aros Bronce Oxidado',tipo:'aros',material:['bronce'],piedra:[],descripcion:'Aros artesanales en Bronce oxidado.',vendido:true,imagen:'imgCG/Aros en bronce_.jpg',imagenes:['imgCG/Aros en bronce_.jpg']},
-  {id:4,nombre:'Aros Alpaca Artesanales',tipo:'aros',material:['alpaca'],piedra:[],descripcion:'Aros artesanales en Alpaca.',vendido:false,imagen:'imgCG/Aros en alpaca.jpg',imagenes:['imgCG/Aros en alpaca.jpg','imgCG/Detalles aros en alpaca.jpg']},
-  {id:5,nombre:'Anillo Giratorio Antiestress',tipo:'anillo',material:['alpaca'],piedra:[],descripcion:'Anillo giratorio antiestress en alpaca texturada.',vendido:true,imagen:'imgCG/Anillo giratorio antiestress en alpaca texturada.jpg',imagenes:['imgCG/Anillo giratorio antiestress en alpaca texturada.jpg']},
-  {id:6,nombre:'Anillo Plata 925',tipo:'anillo',material:['plata'],piedra:[],descripcion:'Anillo minimalista en plata 925.',vendido:false,imagen:'imgCG/Anillo en plata 925.jpg',imagenes:['imgCG/Anillo en plata 925.jpg','imgCG/Detalles anillo en plata 925.jpg']},
-  {id:7,nombre:'Anillo Cobre Artístico',tipo:'anillo',material:['cobre'],piedra:[],descripcion:'Anillo artístico en cobre martillado a mano.',vendido:true,imagen:'imgCG/Anillo en cobre.jpg',imagenes:['imgCG/Anillo en cobre.jpg']},
-  {id:8,nombre:'Anillo Labradorita & Piedra de Luna',tipo:'anillo',material:['alpaca'],piedra:['labradorita','piedra de la luna'],descripcion:'Anillo en alpaca con labradorita y piedra de la luna.',vendido:false,imagen:'imgCG/Anillo en alpaca, labradorita y piedra de la luna.jpg',imagenes:['imgCG/Anillo en alpaca, labradorita y piedra de la luna.jpg']}
+const ADMIN_USERS=[
+  {email:'juancruzri2007@gmail.com', password:'juan2024'},
+  {email:'susabisetti@gmail.com', password:'susana2024'}
 ];
+const WA='5493415408229';
+
+const DEF_PRODUCTS=[];
 const DEF_ABOUT={bio:'Con más de 15 años de experiencia en joyería artesanal, Susana crea cada pieza como una historia única.',process:'Cada joya nace de un boceto a mano y cobra vida a través de técnicas ancestrales de orfebrería.',valores:['✦ Autenticidad — Cada pieza es única','✦ Calidad — Materiales nobles y procesos impecables','✦ Sostenibilidad — Respeto por el entorno']};
 
 let products=[], about={}, comments=[], vis=[], mIdx=0, gIdx=0, carIdx=0, carTimer=null;
@@ -637,10 +632,13 @@ document.addEventListener('keydown',e=>{
 
 // ── CAROUSEL ──
 function buildCarousel(){
+  const carouselImages=[
+    'https://icbrvtfgxnoztmpfczrx.supabase.co/storage/v1/object/public/joyas/carrusel/princCG.jpeg',
+    'https://icbrvtfgxnoztmpfczrx.supabase.co/storage/v1/object/public/joyas/carrusel/princ2CG.jpeg',
+    'https://icbrvtfgxnoztmpfczrx.supabase.co/storage/v1/object/public/joyas/carrusel/princ3CG.jpeg'
+  ];
   const box=document.getElementById('carousel'); box.innerHTML='';
-  const imgs=products.slice(0,4).map(p=>p.imagen).filter(Boolean);
-  if(!imgs.length) return;
-  imgs.forEach((src,i)=>{
+  carouselImages.forEach((src,i)=>{
     const d=document.createElement('div'); d.className='slide'+(i===0?' active':'');
     const img=document.createElement('img'); img.src=src; img.alt='Ciao Joyas';
     d.appendChild(img); box.appendChild(d);
@@ -747,7 +745,8 @@ function doLogin(e){
   e.preventDefault();
   const em=document.getElementById('lEmail').value.trim().toLowerCase();
   const pw=document.getElementById('lPass').value;
-  if(em===ADMIN_EMAIL&&pw===ADMIN_PASS){
+  const validUser=ADMIN_USERS.find(u=>u.email===em && u.password===pw);
+  if(validUser){
     localStorage.setItem('cj_sess','1');
     document.getElementById('loginPanel').style.display='none';
     openAdmin();
