@@ -3,7 +3,78 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ciao Joyas · Susana Bisetti Orfebre</title>
+<title>Ciao Joyas · Susana Bisetti Orfebre | Joyería Artesanal Argentina y España</title>
+<meta name="description" content="Joyería artesanal única creada por Susana Bisetti, orfebre con presencia en Rosario (Argentina) y Alicante (España). Anillos, aros, collares, brazaletes y dijes hechos a mano con materiales nobles. Consultá por WhatsApp.">
+<meta name="keywords" content="joyería artesanal, orfebre, joyas únicas, anillos artesanales, aros artesanales, Rosario Argentina, Alicante España, Valencia, Murcia, plata, Susana Bisetti">
+<meta name="author" content="Susana Bisetti">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://ciao-joyas-gru2.vercel.app/">
+
+<!-- Open Graph / WhatsApp / Facebook / Instagram -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ciao-joyas-gru2.vercel.app/">
+<meta property="og:title" content="Ciao Joyas · Susana Bisetti Orfebre">
+<meta property="og:description" content="Joyería artesanal única hecha a mano. Presencia en Rosario (Argentina) y Alicante (España). Cada pieza, una historia.">
+<meta property="og:image" content="https://icbrvtfgxnoztmpfczrx.supabase.co/storage/v1/object/public/joyas/carrusel/princCG.jpeg">
+<meta property="og:locale" content="es_AR">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:site_name" content="Ciao Joyas">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ciao Joyas · Susana Bisetti Orfebre">
+<meta name="twitter:description" content="Joyería artesanal única hecha a mano. Rosario, Argentina · Alicante, España.">
+<meta name="twitter:image" content="https://icbrvtfgxnoztmpfczrx.supabase.co/storage/v1/object/public/joyas/carrusel/princCG.jpeg">
+
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "LocalBusiness",
+      "@id": "https://ciao-joyas-gru2.vercel.app/#business",
+      "name": "Ciao Joyas · Susana Bisetti Orfebre",
+      "description": "Joyería artesanal única creada a mano por Susana Bisetti, orfebre con más de 15 años de experiencia. Presencia en Rosario (Argentina) y Alicante (España).",
+      "url": "https://ciao-joyas-gru2.vercel.app/",
+      "telephone": "+5493415408229",
+      "image": "https://icbrvtfgxnoztmpfczrx.supabase.co/storage/v1/object/public/joyas/carrusel/princCG.jpeg",
+      "priceRange": "$$",
+      "address": [
+        {
+          "@type": "PostalAddress",
+          "addressLocality": "Rosario",
+          "addressCountry": "AR"
+        },
+        {
+          "@type": "PostalAddress",
+          "addressLocality": "Alicante",
+          "addressCountry": "ES"
+        }
+      ],
+      "areaServed": [
+        {"@type": "City", "name": "Rosario", "containedInPlace": {"@type": "Country", "name": "Argentina"}},
+        {"@type": "City", "name": "Alicante", "containedInPlace": {"@type": "Country", "name": "España"}},
+        {"@type": "City", "name": "Valencia", "containedInPlace": {"@type": "Country", "name": "España"}},
+        {"@type": "City", "name": "Murcia", "containedInPlace": {"@type": "Country", "name": "España"}}
+      ],
+      "sameAs": ["https://www.instagram.com/ciao.joyas"],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "availableLanguage": "Spanish"
+      }
+    },
+    {
+      "@type": "Person",
+      "name": "Susana Bisetti",
+      "jobTitle": "Orfebre Artesanal",
+      "worksFor": {"@id": "https://ciao-joyas-gru2.vercel.app/#business"}
+    }
+  ]
+}
+</script>
+
 <link href="https://fonts.googleapis.com/css2?family=Ovo&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -46,14 +117,22 @@ nav a.nav-active{color:var(--p);border-bottom:2px solid var(--p);font-weight:600
 .btn-wa{background:#25D366;color:var(--w)}.btn-wa:hover{background:#1aa550;transform:translateY(-2px)}
 .btn-ig{background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);color:var(--w)}.btn-ig:hover{transform:translateY(-2px)}
 .btn-cat{background:var(--p);color:var(--w)}.btn-cat:hover{background:var(--pd);transform:translateY(-2px)}
+/* ── CTA LOCATION ── */
+.cta-location{font-size:.8rem;color:#999;margin-top:1.1rem;letter-spacing:.3px}
 /* ── FILTERS ── */
-.filters{background:var(--w);padding:1.4rem 2rem;border-bottom:1px solid #eee;border-top:1px solid #eee}
-.f-inner{max-width:1200px;margin:0 auto;display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-end}
-.fg{display:flex;flex-direction:column;gap:.22rem}
-.fg label{font-size:.75rem;color:#999;text-transform:uppercase;letter-spacing:1px}
+.filters{background:var(--w);padding:1.6rem 2rem;border-bottom:1px solid #eee;border-top:1px solid #eee}
+.f-inner{max-width:1200px;margin:0 auto;display:flex;gap:1.2rem;flex-wrap:wrap;align-items:center}
+.fg{display:flex;flex-direction:column;gap:.5rem}
+.fg label{font-size:.72rem;color:#aaa;text-transform:uppercase;letter-spacing:1.5px}
 .fg select{padding:.48rem .8rem;border:1px solid #ddd;border-radius:6px;font-family:'Ovo',serif;color:var(--n);cursor:pointer;min-width:136px;background:var(--w)}
-.chk-label{display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.9rem;padding-bottom:.3rem}
-.btn-clear{background:transparent;color:var(--err);border:1px solid var(--err);padding:.48rem .95rem;border-radius:6px;cursor:pointer;font-family:'Ovo',serif;transition:all .2s;align-self:flex-end}
+/* Pills */
+.pills{display:flex;gap:.5rem;flex-wrap:wrap}
+.pill{padding:.42rem 1.05rem;border:1.5px solid #ddd;border-radius:20px;background:var(--w);color:#aaa;cursor:pointer;font-family:'Ovo',serif;font-size:.85rem;transition:all .22s;line-height:1}
+.pill:hover{border-color:var(--p);color:var(--p)}
+.pill.active{background:var(--p);color:var(--w);border-color:var(--p)}
+.f-sep{width:1px;height:28px;background:#eee;align-self:center}
+.chk-label{display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.88rem;color:#777}
+.btn-clear{background:transparent;color:var(--err);border:1px solid var(--err);padding:.42rem .95rem;border-radius:6px;cursor:pointer;font-family:'Ovo',serif;font-size:.85rem;transition:all .2s}
 .btn-clear:hover{background:var(--err);color:var(--w)}
 /* ── PRODUCTS ── */
 .products{max-width:1200px;margin:0 auto;padding:3rem 2rem}
@@ -126,7 +205,6 @@ footer{background:var(--n);color:var(--w);padding:2.5rem 2rem;text-align:center}
 .lf input{width:100%;padding:.68rem .9rem;border:1px solid #ccc;border-radius:6px;font-family:'Ovo',serif;font-size:.93rem}
 .btn-login{display:block;width:100%;background:var(--p);color:var(--w);border:none;padding:.88rem;border-radius:8px;font-family:'Ovo',serif;font-size:1rem;cursor:pointer;transition:background .2s}.btn-login:hover{background:var(--pd)}
 .btn-back{display:block;width:100%;margin-top:.8rem;background:transparent;border:1px solid #ddd;padding:.6rem;border-radius:6px;cursor:pointer;color:#999;font-family:'Ovo',serif;transition:all .2s}.btn-back:hover{border-color:#bbb;color:var(--n)}
-.ldemo{margin-top:1.4rem;background:var(--pl);padding:.9rem 1rem;border-radius:6px;font-size:.8rem;color:var(--p);line-height:1.9}
 /* ── ADMIN ── */
 #adminPanel{background:#f2f5f9;display:none;overflow-y:auto}
 .atop{background:var(--p);color:var(--w);padding:1.15rem 2rem;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
@@ -300,10 +378,11 @@ footer{background:var(--n);color:var(--w);padding:2.5rem 2rem;text-align:center}
       </a>
       <button class="btn-cat" onclick="switchTab('productos')">✦ Ver catálogo</button>
     </div>
+    <p class="cta-location">📍 Presente en Rosario, Argentina · Alicante, España &nbsp;·&nbsp; Envíos en ambos países</p>
   </section>
   <section class="about" id="sobre-mi">
     <div class="ab-inner">
-      <img class="ab-img" id="susanaImg" src="https://icbrvtfgxnoztmpfczrx.supabase.co/storage/v1/object/public/joyas/abu/Prod2.jpg" alt="Susana Bisetti">
+      <img class="ab-img" id="susanaImg" src="https://icbrvtfgxnoztmpfczrx.supabase.co/storage/v1/object/public/joyas/abu/Prod2.jpg" alt="Susana Bisetti, orfebre artesanal" loading="lazy">
       <div class="ab-content">
         <h2>Susana Bisetti</h2>
         <div class="ab-sub">Orfebre Artesanal · Rosario, Argentina</div>
@@ -330,7 +409,7 @@ footer{background:var(--n);color:var(--w);padding:2.5rem 2rem;text-align:center}
         @ciao.joyas
       </a>
     </div>
-    <div class="ft-copy">© 2024 Ciao Joyas · Susana Bisetti Orfebre<br><em>Cada pieza, una historia única hecha a mano.</em></div>
+    <div class="ft-copy">© 2026 Ciao Joyas · Susana Bisetti Orfebre<br><em>Cada pieza, una historia única hecha a mano.</em></div>
   </footer>
 </div>
 
@@ -338,13 +417,19 @@ footer{background:var(--n);color:var(--w);padding:2.5rem 2rem;text-align:center}
 <div id="tabProductos" class="tab">
   <section class="filters">
     <div class="f-inner">
-      <div class="fg"><label>Tipo</label>
-        <select id="fTipo" onchange="applyFilters()">
-          <option value="">Todos</option><option>anillo</option><option>aros</option>
-          <option>dije</option><option>brazalete</option><option>collar</option>
-        </select>
+      <div class="fg">
+        <label>Tipo de pieza</label>
+        <div class="pills">
+          <button class="pill active" onclick="setPill(this,'')">Todos</button>
+          <button class="pill" onclick="setPill(this,'anillo')">Anillos</button>
+          <button class="pill" onclick="setPill(this,'aros')">Aros</button>
+          <button class="pill" onclick="setPill(this,'dije')">Dijes</button>
+          <button class="pill" onclick="setPill(this,'brazalete')">Brazaletes</button>
+          <button class="pill" onclick="setPill(this,'collar')">Collares</button>
+        </div>
       </div>
-      <label class="chk-label" style="align-self:flex-end;padding-bottom:.35rem">
+      <div class="f-sep"></div>
+      <label class="chk-label">
         <input type="checkbox" id="fSold" onchange="applyFilters()"> Mostrar vendidos
       </label>
       <button class="btn-clear" onclick="clearFilters()">Limpiar</button>
@@ -590,16 +675,12 @@ async function uploadFile(file, folder='products'){
 // ═══════════════════════════════════════════════════════════
 // CONSTANTS / STATE
 // ═══════════════════════════════════════════════════════════
-const ADMIN_USERS=[
-  {email:'juancruzri2007@gmail.com', password:'juan2024'},
-  {email:'susabisetti@gmail.com', password:'susana2024'}
-];
 const WA='5493415408229';
 
 const DEF_PRODUCTS=[];
 const DEF_ABOUT={bio:'Con más de 15 años de experiencia en joyería artesanal, Susana crea cada pieza como una historia única.',process:'Cada joya nace de un boceto a mano y cobra vida a través de técnicas ancestrales de orfebrería.',valores:['✦ Autenticidad — Cada pieza es única','✦ Calidad — Materiales nobles y procesos impecables','✦ Sostenibilidad — Respeto por el entorno']};
 
-let products=[], about={}, comments=[], vis=[], mIdx=0, gIdx=0, carIdx=0, carTimer=null;
+let products=[], about={}, comments=[], vis=[], mIdx=0, gIdx=0, carIdx=0, carTimer=null, currentTipo='';
 
 // ═══════════════════════════════════════════════════════════
 // UI HELPERS
@@ -665,7 +746,7 @@ function renderProducts(list){
   if(!list.length){g.innerHTML='<div class="no-res">No hay piezas disponibles con este filtro.</div>';return;}
   list.forEach((p,i)=>{
     const c=document.createElement('div'); c.className='card';
-    c.innerHTML=`<img class="card-img" src="${p.imagen||''}" alt="${p.nombre}" onerror="this.style.background='#ddd'">
+    c.innerHTML=`<img class="card-img" src="${p.imagen||''}" alt="${p.nombre}" loading="lazy" onerror="this.style.background='#ddd'">
       <div class="card-body"><div class="card-name">${p.nombre}</div><div class="card-type">${p.tipo}</div>
       <span class="badge ${p.vendido?'b-sold':'b-ok'}">${p.vendido?'✗ Vendido':'✓ Disponible'}</span></div>`;
     c.addEventListener('click',()=>openModal(i));
@@ -674,18 +755,26 @@ function renderProducts(list){
 }
 
 // ── FILTERS ──
+function setPill(btn, tipo){
+  document.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  currentTipo=tipo;
+  applyFilters();
+}
 function applyFilters(){
-  const t=document.getElementById('fTipo').value;
   const s=document.getElementById('fSold').checked;
   vis=products.filter(x=>{
     if(!s&&x.vendido) return false;
-    if(t&&x.tipo!==t) return false;
+    if(currentTipo&&x.tipo!==currentTipo) return false;
     return true;
   });
   renderProducts(vis);
 }
 function clearFilters(){
-  document.getElementById('fTipo').value='';
+  currentTipo='';
+  document.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
+  const allPill=document.querySelector('.pill');
+  if(allPill) allPill.classList.add('active');
   document.getElementById('fSold').checked=false;
   applyFilters();
 }
@@ -746,18 +835,59 @@ function openLogin(){
   document.body.style.overflow='hidden';
 }
 function closeLogin(){document.getElementById('loginPanel').style.display='none';document.body.style.overflow='';}
-function doLogin(e){
+async function doLogin(e){
   e.preventDefault();
   const em=document.getElementById('lEmail').value.trim().toLowerCase();
   const pw=document.getElementById('lPass').value;
-  const validUser=ADMIN_USERS.find(u=>u.email===em && u.password===pw);
-  if(validUser){
-    localStorage.setItem('cj_sess','1');
+  const errEl=document.getElementById('loginErr');
+  errEl.style.display='none';
+  const btn=e.target.querySelector('button[type="submit"]');
+  btn.textContent='Ingresando…'; btn.disabled=true;
+  try{
+    const res=await fetch(`${SB_URL}/auth/v1/token?grant_type=password`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json','apikey':SB_KEY},
+      body:JSON.stringify({email:em,password:pw})
+    });
+    if(!res.ok) throw new Error('Credenciales incorrectas');
+    const data=await res.json();
+    localStorage.setItem('cj_token', data.access_token);
+    localStorage.setItem('cj_refresh', data.refresh_token);
     document.getElementById('loginPanel').style.display='none';
+    document.body.style.overflow='';
     openAdmin();
-  }else{ document.getElementById('loginErr').style.display='block'; }
+  }catch(err){
+    errEl.style.display='block';
+  }finally{
+    btn.textContent='Ingresar'; btn.disabled=false;
+  }
 }
-function doLogout(){localStorage.removeItem('cj_sess');document.getElementById('adminPanel').style.display='none';document.body.style.overflow='';}
+async function doLogout(){
+  const token=localStorage.getItem('cj_token');
+  if(token){
+    try{
+      await fetch(`${SB_URL}/auth/v1/logout`,{
+        method:'POST',
+        headers:{'apikey':SB_KEY,'Authorization':`Bearer ${token}`}
+      });
+    }catch(e){}
+  }
+  localStorage.removeItem('cj_token');
+  localStorage.removeItem('cj_refresh');
+  localStorage.removeItem('cj_sess');
+  document.getElementById('adminPanel').style.display='none';
+  document.body.style.overflow='';
+}
+async function checkSession(){
+  const token=localStorage.getItem('cj_token');
+  if(!token) return false;
+  try{
+    const res=await fetch(`${SB_URL}/auth/v1/user`,{
+      headers:{'apikey':SB_KEY,'Authorization':`Bearer ${token}`}
+    });
+    return res.ok;
+  }catch(e){ return false; }
+}
 async function openAdmin(){
   document.getElementById('adminPanel').style.display='block';
   document.body.style.overflow='auto';
@@ -906,7 +1036,7 @@ window.addEventListener('load', async()=>{
   renderApproved();
   showLoading(false);
   document.querySelector('nav a[data-tab="inicio"]').classList.add('nav-active');
-  if(localStorage.getItem('cj_sess')==='1') openAdmin();
+  if(await checkSession()) openAdmin();
 });
 </script>
 </body>
