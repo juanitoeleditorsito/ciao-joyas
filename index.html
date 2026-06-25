@@ -727,27 +727,41 @@ document.addEventListener('keydown',e=>{
 });
 
 // ── CAROUSEL ──
-function buildCarousel(){
-  const carouselImages=[
-    'https://icbrvtfgxnoztmpfczrx.supabase.co/storage/v1/object/public/joyas/carrusel/princCG.jpeg',
-    'https://icbrvtfgxnoztmpfczrx.supabase.co/storage/v1/object/public/joyas/carrusel/princ2CG.jpeg',
-    'https://icbrvtfgxnoztmpfczrx.supabase.co/storage/v1/object/public/joyas/carrusel/princ3CG.jpeg'
-  ];
+async function buildCarousel(){
   const box=document.getElementById('carousel'); box.innerHTML='';
-  carouselImages.forEach((src,i)=>{
-    const d=document.createElement('div'); d.className='slide'+(i===0?' active':'');
-    const img=document.createElement('img'); img.src=src; img.alt='Ciao Joyas';
-    d.appendChild(img); box.appendChild(d);
-  });
-  clearInterval(carTimer); carIdx=0;
-  carTimer=setInterval(()=>{
-    const s=box.querySelectorAll('.slide');
-    s[carIdx].classList.remove('active');
-    carIdx=(carIdx+1)%s.length;
-    s[carIdx].classList.add('active');
-  },10000);
+  clearInterval(carTimer);
+  try{
+    const res=await fetch(
+      `${SB_URL}/storage/v1/object/list/joyas/carrusel`,
+      {headers:{'apikey':SB_KEY}}
+    );
+    if(!res.ok) throw new Error('Falló listar fotos');
+    const data=await res.json();
+    const carouselImages=(data.name||[])
+      .filter(f=>f.match(/\.(jpg|jpeg|png|webp)$/i))
+      .map(f=>`${SB_URL}/storage/v1/object/public/joyas/carrusel/${f}`);
+    
+    if(!carouselImages.length){
+      box.innerHTML='<div style="width:100%;height:100%;background:#ddd;display:flex;align-items:center;justify-content:center">📷 Sin fotos en carrusel</div>';
+      return;
+    }
+    carouselImages.forEach((src,i)=>{
+      const d=document.createElement('div'); d.className='slide'+(i===0?' active':'');
+      const img=document.createElement('img'); img.src=src; img.alt='Ciao Joyas';
+      d.appendChild(img); box.appendChild(d);
+    });
+    carIdx=0;
+    carTimer=setInterval(()=>{
+      const s=box.querySelectorAll('.slide');
+      s[carIdx].classList.remove('active');
+      carIdx=(carIdx+1)%s.length;
+      s[carIdx].classList.add('active');
+    },10000);
+  }catch(e){
+    console.warn('buildCarousel:', e.message);
+    box.innerHTML='<div style="width:100%;height:100%;background:#ddd;display:flex;align-items:center;justify-content:center">⚠ Error cargando carrusel</div>';
+  }
 }
-
 // ── RENDER PRODUCTS ──
 function renderProducts(list){
   const g=document.getElementById('pgrid'); g.innerHTML='';
