@@ -141,7 +141,7 @@ nav a.nav-active{color:var(--p);border-bottom:2px solid var(--p);font-weight:600
 .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.8rem}
 .card{background:var(--w);border-radius:10px;overflow:hidden;border:1px solid #efefef;box-shadow:0 2px 6px rgba(0,0,0,.05);cursor:pointer;transition:all .25s}
 .card:hover{box-shadow:0 8px 20px rgba(0,0,0,.12);transform:translateY(-4px)}
-.card-img{width:100%;height:215px;object-fit:cover;background:#eee;display:block}
+.card-img{width:100%;aspect-ratio:1/1;object-fit:cover;background:#eee;display:block}
 .card-body{padding:1.15rem}
 .card-name{font-size:.97rem;color:var(--p);margin-bottom:.25rem}
 .card-type{font-size:.82rem;color:#bbb;text-transform:capitalize;margin-bottom:.7rem}
@@ -311,13 +311,20 @@ footer{background:var(--n);color:var(--w);padding:2.5rem 2rem;text-align:center}
         </div>
         <div class="af"><label>Descripción</label><textarea id="pDesc"></textarea></div>
         <div class="af">
-          <label>📷 Subir imagen principal</label>
-          <input type="file" id="pImgFile" accept="image/*" onchange="previewImg(this)">
+          <label>📷 Imagen principal *</label>
+          <div style="display:flex;gap:.5rem;margin-bottom:.8rem">
+            <input type="file" id="pImgFile" accept="image/*" onchange="previewImg(this)" style="flex:1">
+            <button type="button" onclick="clearMainImg()" style="padding:.65rem 1rem;background:#ffebee;color:#ef4444;border:1px solid #ffcdd2;border-radius:6px;cursor:pointer;font-family:'Ovo',serif;font-size:.9rem">Eliminar</button>
+          </div>
           <img id="pImgPreview" class="img-preview" alt="Vista previa">
-          <p class="upload-note">Sube a Supabase Storage automáticamente. O ingresá una URL abajo.</p>
+          <p class="upload-note">JPG/PNG, máx 200KB. Se sube automáticamente.</p>
         </div>
-        <div class="af"><label>URL imagen (si no subís archivo)</label><input type="text" id="pImg" placeholder="https://… o imgCG/nombre.jpg"></div>
-        <div class="af"><label>URLs galería adicional (coma)</label><input type="text" id="pGal"></div>
+        <div class="af">
+          <label>Galería adicional (una foto por vez)</label>
+          <input type="file" id="pGalFile" accept="image/*" onchange="addGalleryImg(this)" style="width:100%;margin-bottom:.8rem">
+          <div id="galPreview" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:.5rem"></div>
+          <p class="upload-note">Sube fotos una por una, se agregan automáticamente</p>
+        </div>
         <div class="af"><label style="display:flex;align-items:center;gap:.5rem;cursor:pointer"><input type="checkbox" id="pSold"> Marcar como VENDIDO</label></div>
         <div style="display:flex;gap:1rem">
           <button type="submit" class="btn-sub" style="flex:1" id="pSubmitBtn">Guardar producto</button>
@@ -593,7 +600,6 @@ async function loadAbout(){
 async function saveAbout(data){
   const row = {bio:data.bio, process:data.process, valores:data.valores};
   try{
-    // check if row exists → PATCH, else POST
     const existing = await sbFetch('about?select=id&limit=1');
     if(existing && existing.length>0){
       await sbFetch(`about?id=eq.${existing[0].id}`, 'PATCH', row);
@@ -659,7 +665,7 @@ async function rejectComment(id){
 }
 
 // ── STORAGE UPLOAD ──
-async function uploadFile(file, folder='products'){
+async function uploadFile(file, folder='products-active'){
   const ext  = file.name.split('.').pop().toLowerCase();
   const path = `${folder}/${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
   const fd   = new FormData();
@@ -682,6 +688,7 @@ const DEF_PRODUCTS=[];
 const DEF_ABOUT={bio:'Con más de 15 años de experiencia en joyería artesanal, Susana crea cada pieza como una historia única.',process:'Cada joya nace de un boceto a mano y cobra vida a través de técnicas ancestrales de orfebrería.',valores:['✦ Autenticidad — Cada pieza es única','✦ Calidad — Materiales nobles y procesos impecables','✦ Sostenibilidad — Respeto por el entorno']};
 
 let products=[], about={}, comments=[], vis=[], mIdx=0, gIdx=0, carIdx=0, carTimer=null, currentTipo='';
+let pendingGalleryImgs=[];
 
 // ═══════════════════════════════════════════════════════════
 // UI HELPERS
@@ -910,6 +917,35 @@ function previewImg(input){
     r.readAsDataURL(input.files[0]);
   }
 }
+function clearMainImg(){
+  document.getElementById('pImgFile').value='';
+  document.getElementById('pImgPreview').style.display='none';
+}
+function addGalleryImg(input){
+  if(!input.files||!input.files[0]) return;
+  const file=input.files[0];
+  const r=new FileReader();
+  r.onload=e=>{
+    const div=document.createElement('div');
+    div.style.cssText='position:relative;width:80px;height:80px;border-radius:6px;overflow:hidden;border:1px solid #ddd';
+    const img=document.createElement('img');
+    img.src=e.target.result;
+    img.style.cssText='width:100%;height:100%;object-fit:cover;cursor:pointer';
+    const btn=document.createElement('button');
+    btn.type='button';
+    btn.textContent='✕';
+    btn.style.cssText='position:absolute;top:-5px;right:-5px;width:20px;height:20px;background:#ef4444;color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:.9rem;display:none';
+    div.appendChild(img);
+    div.appendChild(btn);
+    div.onmouseenter=()=>btn.style.display='block';
+    div.onmouseleave=()=>btn.style.display='none';
+    btn.onclick=()=>div.remove();
+    document.getElementById('galPreview').appendChild(div);
+    pendingGalleryImgs.push(file);
+  };
+  r.readAsDataURL(file);
+  input.value='';
+}
 function renderAdminTable(){
   document.getElementById('ptbody').innerHTML=products.map(p=>`
     <tr><td>${p.nombre}</td><td>${p.tipo}</td>
@@ -924,14 +960,21 @@ async function submitProduct(e){
   btn.textContent='Guardando…'; btn.disabled=true;
   showLoading(true, eid?'Actualizando producto…':'Guardando producto…');
   try{
-    let imgUrl=document.getElementById('pImg').value.trim();
+    let imgUrl='';
     const file=document.getElementById('pImgFile');
     if(file.files&&file.files.length>0){
-      showLoading(true,'Subiendo imagen a Storage…');
+      showLoading(true,'Subiendo imagen principal…');
       imgUrl=await uploadFile(file.files[0]);
     }
-    const extra=document.getElementById('pGal').value.split(',').map(s=>s.trim()).filter(Boolean);
-    const allImgs=imgUrl?[imgUrl,...extra]:extra;
+    let galUrls=[];
+    if(pendingGalleryImgs.length>0){
+      showLoading(true,'Subiendo galería…');
+      for(let i=0;i<pendingGalleryImgs.length;i++){
+        const url=await uploadFile(pendingGalleryImgs[i]);
+        galUrls.push(url);
+      }
+    }
+    const allImgs=imgUrl?[imgUrl,...galUrls]:galUrls;
     const prod={
       nombre:document.getElementById('pName').value.trim(),
       tipo:document.getElementById('pTipo').value,
@@ -958,8 +1001,6 @@ function editP(id){
   document.getElementById('pMat').value=mat.join(', ');
   document.getElementById('pPie').value=pie.join(', ');
   document.getElementById('pDesc').value=p.descripcion;
-  document.getElementById('pImg').value=p.imagen||'';
-  document.getElementById('pGal').value=imgs.slice(1).join(', ');
   document.getElementById('pSold').checked=p.vendido;
   if(p.imagen){const pr=document.getElementById('pImgPreview');pr.src=p.imagen;pr.style.display='block';}
   document.getElementById('adminPanel').scrollTop=0;
@@ -975,10 +1016,13 @@ async function delP(id){
 
 function resetPF(){
   document.getElementById('editId').value='';
-  ['pName','pMat','pPie','pDesc','pImg','pGal'].forEach(id=>document.getElementById(id).value='');
+  ['pName','pMat','pPie','pDesc'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('pTipo').value=''; document.getElementById('pSold').checked=false;
   document.getElementById('pImgFile').value='';
+  document.getElementById('pGalFile').value='';
   const pr=document.getElementById('pImgPreview'); pr.src=''; pr.style.display='none';
+  document.getElementById('galPreview').innerHTML='';
+  pendingGalleryImgs=[];
 }
 
 async function submitAbout(e){
