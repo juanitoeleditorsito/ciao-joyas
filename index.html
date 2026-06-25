@@ -731,29 +731,39 @@ document.addEventListener('keydown',e=>{
 // ── CAROUSEL ──
 function buildCarousel(){
   const box=document.getElementById('carousel');
+  if(!box) return;
   box.innerHTML='';
   clearInterval(carTimer);
+  
   const carouselImages=[
     'https://icbrvtfgxnoztmpfczrx.supabase.co/storage/v1/object/public/joyas/carrusel/princ1CG.jpeg',
     'https://icbrvtfgxnoztmpfczrx.supabase.co/storage/v1/object/public/joyas/carrusel/princ2CG.jpeg',
     'https://icbrvtfgxnoztmpfczrx.supabase.co/storage/v1/object/public/joyas/carrusel/princ3CG.jpeg'
   ];
+  
+  if(!carouselImages || carouselImages.length===0) return;
+  
   carouselImages.forEach((src,i)=>{
     const div=document.createElement('div');
     div.className='slide';
     if(i===0) div.classList.add('active');
     const img=document.createElement('img');
     img.src=src;
+    img.alt='Carrusel '+i;
+    img.loading='lazy';
     div.appendChild(img);
     box.appendChild(div);
   });
+  
   carIdx=0;
-  carTimer=setInterval(()=>{
-    const slides=document.querySelectorAll('.slide');
-    slides[carIdx].classList.remove('active');
-    carIdx=(carIdx+1)%slides.length;
-    slides[carIdx].classList.add('active');
-  }, 4500);
+  if(carouselImages.length > 1){
+    carTimer=setInterval(()=>{
+      const slides=document.querySelectorAll('.slide');
+      slides[carIdx].classList.remove('active');
+      carIdx=(carIdx+1)%slides.length;
+      slides[carIdx].classList.add('active');
+    }, 4500);
+  }
 }
 // ── FILTERS ──
 function setPill(btn, tipo){
@@ -899,6 +909,25 @@ async function openAdmin(){
   document.getElementById('av2').value=vs[1]||'';
   document.getElementById('av3').value=vs[2]||'';
   renderAdminTable(); renderPending();
+}
+
+// ── RENDER PRODUCTS GRID ──
+function renderProducts(prods){
+  const grid=document.getElementById('pgrid');
+  if(!prods||prods.length===0){
+    grid.innerHTML='<div class="no-res">No hay productos que mostrar</div>';
+    return;
+  }
+  grid.innerHTML=prods.map((p,i)=>`
+    <div class="card" onclick="openModal(${i})">
+      <img class="card-img" src="${p.imagen||''}" alt="${p.nombre}" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22%3E%3Crect fill=%22%23eee%22 width=%22200%22 height=%22200%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 font-family=%22sans-serif%22 font-size=%2214%22 fill=%22%23999%22%3ESin imagen%3C/text%3E%3C/svg%3E'">
+      <div class="card-body">
+        <div class="card-name">${p.nombre}</div>
+        <div class="card-type">${p.tipo}</div>
+        <span class="badge ${p.vendido?'b-sold':'b-ok'}">${p.vendido?'✗ Vendido':'✓ Disponible'}</span>
+      </div>
+    </div>
+  `).join('');
 }
 
 // ── ADMIN CRUD ──
