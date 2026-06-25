@@ -153,7 +153,7 @@ nav a.nav-active{color:var(--p);border-bottom:2px solid var(--p);font-weight:600
 .modal-bg.open{display:flex}
 .modal-box{background:var(--w);border-radius:12px;max-width:570px;width:100%;max-height:90vh;overflow-y:auto;position:relative;padding:2rem}
 .m-close{position:absolute;top:1rem;right:1.2rem;font-size:1.75rem;cursor:pointer;color:#ccc;transition:color .2s;line-height:1}.m-close:hover{color:var(--p)}
-.m-img{width:100%;aspect-ratio:1/1;object-fit:contain;background:#eee;display:block;max-width:450px;margin:0 auto}
+.m-img{width:100%;aspect-ratio:1/1;object-fit:contain;background:#eee;display:block;max-width:500px;margin:0 auto 1.5rem}
 .g-ctrl{display:flex;justify-content:center;align-items:center;gap:1rem;margin-bottom:1.5rem}
 .g-ctrl button{background:var(--p);color:var(--w);border:none;padding:.4rem .95rem;border-radius:6px;cursor:pointer;font-family:'Ovo',serif;transition:background .2s}
 .g-ctrl button:hover{background:var(--pd)}
@@ -450,7 +450,9 @@ footer{background:var(--n);color:var(--w);padding:2.5rem 2rem;text-align:center}
   <div class="modal-bg" id="modal">
     <div class="modal-box">
       <span class="m-close" onclick="closeModal()">&times;</span>
-      <img class="m-img" id="mImg" src="" alt="">
+      <div style="display:flex;justify-content:center;width:100%;margin-bottom:1.5rem">
+        <img class="m-img" id="mImg" src="" alt="">
+      </div>
       <div class="g-ctrl">
         <button onclick="prevImg()">← Anterior</button>
         <span class="g-cnt" id="gCnt"></span>
@@ -727,36 +729,14 @@ document.addEventListener('keydown',e=>{
 });
 
 // ── CAROUSEL ──
-async function buildCarousel(){
+function buildCarousel(){
   const box=document.getElementById('carousel'); box.innerHTML='';
   clearInterval(carTimer);
-  try{
-    const res=await fetch(
-      `${SB_URL}/storage/v1/object/list/joyas/carrusel?limit=100`,
-      {
-        method:'POST',
-        headers:{'apikey':SB_KEY,'Content-Type':'application/json'},
-        body:'{}'
-      }
-    );
-    if(!res.ok) throw new Error('Falló listar fotos: '+res.status);
-    const data=await res.json();
-    const carouselImages=(data||[])
-      .filter(f=>f.name && f.name.match(/\.(jpg|jpeg|png|webp)$/i))
-      .map(f=>`${SB_URL}/storage/v1/object/public/joyas/carrusel/${f.name}`);// ── RENDER PRODUCTS ──
-function renderProducts(list){
-  const g=document.getElementById('pgrid'); g.innerHTML='';
-  if(!list.length){g.innerHTML='<div class="no-res">No hay piezas disponibles con este filtro.</div>';return;}
-  list.forEach((p,i)=>{
-    const c=document.createElement('div'); c.className='card';
-    c.innerHTML=`<img class="card-img" src="${p.imagen||''}" alt="${p.nombre}" loading="lazy" onerror="this.style.background='#ddd'">
-      <div class="card-body"><div class="card-name">${p.nombre}</div><div class="card-type">${p.tipo}</div>
-      <span class="badge ${p.vendido?'b-sold':'b-ok'}">${p.vendido?'✗ Vendido':'✓ Disponible'}</span></div>`;
-    c.addEventListener('click',()=>openModal(i));
-    g.appendChild(c);
-  });
-}
-
+  const carouselImages=[
+    'https://icbrvtfgxnoztmpfczrx.supabase.co/storage/v1/object/public/joyas/carrusel/princ1CG.jpeg',
+    'https://icbrvtfgxnoztmpfczrx.supabase.co/storage/v1/object/public/joyas/carrusel/princ2CG.jpeg',
+    'https://icbrvtfgxnoztmpfczrx.supabase.co/storage/v1/object/public/joyas/carrusel/princ3CG.jpeg'
+  ];
 // ── FILTERS ──
 function setPill(btn, tipo){
   document.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
